@@ -1,5 +1,5 @@
 /*!
-  backbone.fetch-cache v1.4.1
+  backbone.fetch-cache v2.0.2
   by Andy Appleton - https://github.com/mrappleton/backbone-fetch-cache.git
  */
 
@@ -26,18 +26,16 @@
     collectionFetch: Backbone.Collection.prototype.fetch
   },
   supportLocalStorage = (function() {
-    var supported = typeof window.localStorage !== 'undefined';
-    if (supported) {
-      try {
-        // impossible to write on some platforms when private browsing is on and
-        // throws an exception = local storage not supported.
-        localStorage.setItem('test_support', 'test_support');
-        localStorage.removeItem('test_support');
-      } catch (e) {
-        supported = false;
-      }
+    try {
+      // impossible to write on some platforms when private browsing is on and
+      // throws an exception = local storage not supported.
+      localStorage.setItem('test_support', 'test_support');
+      localStorage.removeItem('test_support');
+    } catch (e) {
+      return false;
     }
-    return supported;
+
+    return true;
   })();
 
   Backbone.fetchCache = (Backbone.fetchCache || {});
